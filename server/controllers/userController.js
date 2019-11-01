@@ -1,11 +1,11 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const blacklist = require('express-jwt-blacklist');
 const models = require('../models');
 const Op = models.Sequelize.Op
 
 // Requiring User model
 const User = models.User;
-
 
 exports.registerUser = (req, res) => {
     const userData = {
@@ -78,7 +78,8 @@ exports.loginUser = (req, res) => {
             if(user) {
                 if(bcrypt.compareSync(req.body.password, user.password)) {
                     let jwtToken = jwt.sign(user.dataValues, process.env.JWT_SECRET, {
-                        expiresIn: 1440
+                        expiresIn: 1440,
+                        subject: user.dataValues.username,
                       })
                     res.cookie('jwt', jwtToken, { httpOnly: true })
                     res.json({
@@ -106,4 +107,12 @@ exports.loginUser = (req, res) => {
             message: "Email or Username not provided"
         })
     }  
+}
+
+exports.logoutUser = (req, res) => {
+    blacklist.revoke(req.user)
+    res.status(200).json({
+        success: true,
+        message: "User has successfully logged out"
+    })
 }
