@@ -1,0 +1,87 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgb(52, 113, 235);
+}
+
+.loginContainer {
+    margin: 10%; 
+    width: 20%;
+    height: 60%;
+    background-color:rgb(254, 254, 254);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.loginHeader {
+    text-align: center;
+    padding-top: 10%;
+}
+
+span {
+    display: block;
+    text-align: center;
+    color: grey
+}
+
+a {
+    text-decoration: underline;
+    color: grey;
+}
+
+a:hover {
+   color: black;
+   text-decoration: underline;
+}
+
+.adjInputLeft {
+    width: 33%;
+    background-color: rgb(245, 245, 245);
+    padding: 15px;
+    margin-top: 20px;
+    margin-right: 2%;
+    border: none;
+    border-radius: 4px;
+}
+
+.adjInputRight {
+    width: 34%;
+    background-color: rgb(245, 245, 245);
+    margin-top: 20px;
+    margin-left: 2%;
+    padding: 15px;
+    border: none;
+    border-radius: 4px;
+}
+
+
+.textInput {
+    width: 80%;
+    background-color: rgb(245, 245, 245);
+    padding: 15px;
+    margin: 20px auto 20px auto;
+    display:block;
+    border: none;
+    border-radius: 4px;
+}
+
+input[type=button] {
+    width: 80%;
+    background-color: rgb(52, 113, 235);
+    color: white;
+    padding: 15px;
+    margin: 20px auto 20px auto;
+    display:block;
+    border: none;
+    border-radius: 4px;
+}
+
+.linkWrapper {
+    text-align: center;
+}
+
+.link {
+    display: inline;
+    margin: auto
+}
