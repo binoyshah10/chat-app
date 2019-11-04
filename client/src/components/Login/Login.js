@@ -6,7 +6,7 @@ import { submitLogin } from "../../actions/index";
 
 function mapDispatchToProps(dispatch) {
     return {
-      submitLogin: loginInfo => dispatch(submitLogin(loginInfo))
+      submitLogin: payload => dispatch(submitLogin(payload))
     };
 }
 
@@ -21,7 +21,8 @@ class Login extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         const { emailOrUsername, password } = this.state;
-        this.props.submitLogin({ emailOrUsername, password });
+        const payload = { emailOrUsername, password }
+        this.props.submitLogin(payload);
     }
 
     handleChange = (event) => {

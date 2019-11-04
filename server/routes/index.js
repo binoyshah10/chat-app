@@ -7,7 +7,7 @@ const jwt = require('express-jwt');
 const userController = require('../controllers/userController');
 
 // User Routes
-router.post('/register', userController.registerUser);
+router.post('/signup', userController.signUpUser);
 router.post('/login', userController.loginUser);
 router.post('/logout', userController.logoutUser);
 

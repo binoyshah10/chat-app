@@ -7,7 +7,7 @@ const Op = models.Sequelize.Op
 // Requiring User model
 const User = models.User;
 
-exports.registerUser = (req, res) => {
+exports.signUpUser = (req, res) => {
     const userData = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -36,7 +36,7 @@ exports.registerUser = (req, res) => {
                   .then(user => {
                     res.json({ 
                         success: true,
-                        message: user.email + ' Registered!' 
+                        message: user.email + ' signed up!' 
                     })
                   })
                   .catch(err => {
@@ -56,21 +56,22 @@ exports.registerUser = (req, res) => {
     }).catch(err => {
         res.json({
             success: false,
-            message: err + " # Register query failed!"
+            message: err + " # Sign Up query failed!"
         })
     })
 }
 
 exports.loginUser = (req, res) => {
-    if(req.body.email || req.body.username) {
+    console.log(req.body)
+    if(req.body.emailOrUsername && req.body.password) {
         User.findOne({
             where: {
                 [Op.or] : [
                     {
-                        email: req.body.email || ''
+                        email: req.body.emailOrUsername || ''
                     },
                     {
-                        username: req.body.username || ''
+                        username: req.body.emailOrUsername || ''
                     }
                 ]
             }
@@ -85,6 +86,7 @@ exports.loginUser = (req, res) => {
                     res.json({
                         success: true,
                         message: 'Authentication successful!',
+                        payload: user.dataValues
                     });
                 }
             }

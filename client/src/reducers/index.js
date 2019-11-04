@@ -1,4 +1,4 @@
-import { LOGIN } from "../constants/actionTypes";
+import { LOGIN_SUCCESS } from "../constants/actionTypes";
 
 const initialState = {
   user: {},
@@ -6,6 +6,14 @@ const initialState = {
 };
 
 function rootReducer(state = initialState, action) {
+
+  if (action.type === LOGIN_SUCCESS) {
+    return Object.assign({}, state, {
+      user: action.payload,
+      loggedIn: true
+    });
+  }
+
   return state;
 }
 

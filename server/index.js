@@ -1,5 +1,6 @@
 const express = require('express');
 const socketio = require('socket.io');
+const cors = require('cors');
 const http = require('http');
 const env = require('dotenv').config();
 const cookieParser = require('cookie-parser')
@@ -16,6 +17,7 @@ const app = express();
 app.use(express.json()); //Used to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); //Parse URL-encoded bodies
 app.use(cookieParser());
+app.use(cors());
 
 app.use(jwt({secret: process.env.JWT_SECRET, isRevoked: blacklist.isRevoked}).unless({path: ['/register', '/login']}));
 
