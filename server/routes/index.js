@@ -10,6 +10,7 @@ const userController = require('../controllers/userController');
 router.post('/signup', userController.signUpUser);
 router.post('/login', userController.loginUser);
 router.post('/logout', userController.logoutUser);
+router.get('/isAuthenticated', userController.isAuthenticated);
 
 router.get('/', (req, res) => {
     res.send('hello');

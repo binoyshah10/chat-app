@@ -1,32 +1,43 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import axios from 'axios';
 
+import { LOGIN_SUCCESS, LOGIN_FAILED } from '../constants/actionTypes'
+
+axios.defaults.withCredentials = true;
+
 export default function* loginWatcherSaga() {
   yield takeEvery("LOGIN", loginWorkerSaga);
 }
 
 function* loginWorkerSaga({ payload }) {
   try {
-    console.log(payload)
-    const userData = yield call(sendLoginInfo(payload));
-    yield put({ type: "LOGIN_SUCCESS", userData });
+    const response = yield call(sendLoginInfo, payload);
+    console.log(response)
+    yield put({ type: LOGIN_SUCCESS, payload: response.payload });
   } catch (e) {
-    yield put({ type: "API_ERRORED", payload: e });
+    console.log(e)
+    yield put({ type: LOGIN_FAILED, payload: e });
   }
 }
 
+// function sendLoginInfo(payload) {
+//   return axios.post('http://localhost:5000/login', {
+//     emailOrUsername: payload['emailOrUsername'],
+//     password: payload['password']
+//   })
+// }
+
 function sendLoginInfo(payload) {
-  console.log(payload)
-  axios.post('http://localhost:5000/login', {
-    emailOrUsername: payload['emailOrUsername'],
-    password: payload['password']
-  })
-  .then(function (response) {
-    console.log(response);
-    return response;
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+  return fetch('http://localhost:5000/login', {
+    method: 'post',
+    body: JSON.stringify({
+      emailOrUsername: payload['emailOrUsername'],
+      password: payload['password']
+    }),
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  }).then(response => response.json())
 }
 

@@ -17,14 +17,28 @@ const app = express();
 app.use(express.json()); //Used to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); //Parse URL-encoded bodies
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+  credentials: true, 
+  origin: true,
+  allowedHeaders: ['Content-Type', 'Authorization', 'Content-Length', 'X-Requested-With', 'Accept']
+}));
 
-app.use(jwt({secret: process.env.JWT_SECRET, isRevoked: blacklist.isRevoked}).unless({path: ['/register', '/login']}));
+app.use(jwt({
+  secret: process.env.JWT_SECRET, 
+  isRevoked: blacklist.isRevoked,
+  getToken: (req) => {
+    if(req.cookies.jwt) {
+      return req.cookies.jwt
+    }
+    return null;
+  }
+}).unless({path: ['/register', '/login']}));
 
 app.use(routes);
 
 app.use(function(err, req, res, next) {
-  console.log(err);
+  // console.log(err);
+  console.log(req.cookies)
   if(err.name === 'UnauthorizedError') {
     res.status(err.status).send({message:err});
     return;

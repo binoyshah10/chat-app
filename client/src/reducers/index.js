@@ -1,8 +1,9 @@
-import { LOGIN_SUCCESS } from "../constants/actionTypes";
+import { LOGIN_SUCCESS, LOGIN_CHECK_SUCCESS, LOGIN_CHECK_FAILED } from "../constants/actionTypes";
 
 const initialState = {
   user: {},
-  loggedIn: false
+  loggedIn: false,
+  loading: false
 };
 
 function rootReducer(state = initialState, action) {
@@ -12,6 +13,22 @@ function rootReducer(state = initialState, action) {
       user: action.payload,
       loggedIn: true
     });
+  }
+
+  if (action.type === LOGIN_CHECK_SUCCESS) {
+    return { 
+      user: action.payload,
+      loggedIn: true,
+      loading: false
+     }
+  }
+
+  if (action.type === 'LOGIN_CHECK_LOADING') {
+    return {...state, loading: true}
+  }
+
+  if (action.type === LOGIN_CHECK_FAILED) {
+    return {...state, loading: false}
   }
 
   return state;

@@ -6,9 +6,16 @@ import { submitLogin } from "../../actions/index";
 
 function mapDispatchToProps(dispatch) {
     return {
-      submitLogin: payload => dispatch(submitLogin(payload))
+        submitLogin: payload => dispatch(submitLogin(payload))
     };
 }
+
+const mapStateToProps = (state) => {
+    return {
+        loggedIn: state.loggedIn,
+        loading: state.loading
+    };
+  };
 
 
 class Login extends Component {
@@ -31,20 +38,32 @@ class Login extends Component {
         })
     }
 
+    componentDidMount() {
+        if(this.props.loggedIn) {
+            this.props.history.push('/')
+        }
+    }
+
+    componentDidUpdate() {
+        if(this.props.loggedIn) {
+            this.props.history.push('/')
+        }
+    }
+
     render() {
         return (
             <div className={styles.container}>
                 <div className={styles.loginContainer}>
                     <h1 className={styles.loginHeader}>Log into App</h1>
                         <Link to={`/signup`}>
-                            <p>Or Create Account</p>
+                            <p className={styles.text}>{`Or Create Account`}</p>
                         </Link>
                     <form onSubmit={this.handleSubmit}>
                         <input className={styles.textInput} type="text" placeholder="Email Address or Username" name="emailOrUsername" onChange={this.handleChange}/>
                         <input className={styles.textInput} type="password" placeholder="Password" name="password" onChange={this.handleChange}/>
                         <input type="submit" value="Login"/>
                         <Link to={`/forgotpassword`}>
-                            <p>{`Forgot Password?`}</p>
+                            <p className={styles.text}>{`Forgot Password?`}</p>
                         </Link>
                     </form>
                 </div>
@@ -53,4 +72,4 @@ class Login extends Component {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

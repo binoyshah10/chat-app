@@ -78,7 +78,13 @@ exports.loginUser = (req, res) => {
         }).then(user => {
             if(user) {
                 if(bcrypt.compareSync(req.body.password, user.password)) {
-                    let jwtToken = jwt.sign(user.dataValues, process.env.JWT_SECRET, {
+                    let userData = {
+                        firstName: user.firstName, 
+                        lastName: user.lastName, 
+                        username: user.username, 
+                        email: user.email
+                    };
+                    let jwtToken = jwt.sign(userData, process.env.JWT_SECRET, {
                         expiresIn: 1440,
                         subject: user.dataValues.username,
                       })
@@ -86,7 +92,7 @@ exports.loginUser = (req, res) => {
                     res.json({
                         success: true,
                         message: 'Authentication successful!',
-                        payload: user.dataValues
+                        payload: userData
                     });
                 }
             }
@@ -116,5 +122,20 @@ exports.logoutUser = (req, res) => {
     res.status(200).json({
         success: true,
         message: "User has successfully logged out"
+    })
+}
+
+exports.isAuthenticated = (req, res) => {
+    const userData = {
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        username: req.user.username,
+        email: req.user.email
+    }
+    
+    res.status(200).json({
+        success: true,
+        message: "User is authenticated",
+        payload: userData
     })
 }
