@@ -9,14 +9,19 @@
 .loginContainer {
     margin: 10%; 
     width: 20%;
-    height: 60%;
+    height: 56%;
     background-color:rgb(254, 254, 254);
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    min-width: 400px;
+    min-height: 550px;
 }
 
 .loginHeader {
     text-align: center;
     padding-top: 10%;
+    font-size: 30px;
 }
 
 span {
@@ -67,7 +72,7 @@ a:hover {
 }
 
 input[type=button] {
-    width: 80%;
+    width: 88%;
     background-color: rgb(52, 113, 235);
     color: white;
     padding: 15px;
@@ -79,9 +84,14 @@ input[type=button] {
 
 .linkWrapper {
     text-align: center;
+    margin-top: 15px;
 }
 
 .link {
     display: inline;
-    margin: auto
+}
+
+.error {
+    margin: 10px auto 10px auto;
+    color: red;
 }

@@ -1,12 +1,12 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import axios from 'axios';
 
-import { LOGIN_SUCCESS, LOGIN_FAILED } from '../constants/actionTypes'
+import { LOGIN, LOGIN_SUCCESS, LOGIN_FAILED } from '../constants/actionTypes'
 
 axios.defaults.withCredentials = true;
 
 export default function* loginWatcherSaga() {
-  yield takeEvery("LOGIN", loginWorkerSaga);
+  yield takeEvery(LOGIN, loginWorkerSaga);
 }
 
 function* loginWorkerSaga({ payload }) {

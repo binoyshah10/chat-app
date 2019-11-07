@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { submitLogin } from "../../actions/index";
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
     return {
         submitLogin: payload => dispatch(submitLogin(payload))
     };
