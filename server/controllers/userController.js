@@ -8,10 +8,11 @@ const Op = models.Sequelize.Op
 const User = models.User;
 
 exports.signUpUser = (req, res) => {
+    console.log("here")
     const userData = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        email: req.body.lastName,
+        email: req.body.email,
         username: req.body.password,
         password: req.body.password
       }
@@ -28,10 +29,12 @@ exports.signUpUser = (req, res) => {
             ]
         }
     }).then(user => {
+        console.log(user)
         if(!user) {
             // hash password with bcrypt
             bcrypt.hash(req.body.password, 10, (err, hash) => {
                 userData.password = hash
+                console.log('here 2')
                 User.create(userData)
                   .then(user => {
                     res.json({ 
@@ -42,7 +45,7 @@ exports.signUpUser = (req, res) => {
                   .catch(err => {
                     res.json({
                         success: false,
-                        message: err
+                        message: err.errors[0]
                     })
                   })
               })
@@ -54,6 +57,7 @@ exports.signUpUser = (req, res) => {
             });
         }
     }).catch(err => {
+        console.log(err)
         res.json({
             success: false,
             message: err + " # Sign Up query failed!"

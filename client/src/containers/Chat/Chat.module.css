@@ -1,0 +1,36 @@
+.gridContainer {
+    display: grid;
+    grid-template-columns: 80px 200px 1fr;
+    grid-template-areas:
+    "teamSidebar channelSidebar header"
+    "teamSidebar channelSidebar main"
+}
+
+.header {
+    grid-area: header;
+    background-color: rgb(250, 250, 250);
+    height: 8vh;
+}
+
+.teamSidebar {
+    grid-area: teamSidebar;
+    height: 100%;
+    width: 80px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    background-color:yellow;
+}
+
+.channelSidebar {
+    grid-area: channelSidebar;
+    height: 100%;
+    width: 200px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    background-color: #1e2233;
+}
+
+.main {
+    grid-area: main;
+    background-color: rgb(253, 253, 253);
+    height: 92vh;
+}
+

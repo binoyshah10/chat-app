@@ -32,7 +32,7 @@ app.use(jwt({
     }
     return null;
   }
-}).unless({path: ['/register', '/login']}));
+}).unless({path: ['/signup', '/login']}));
 
 app.use(routes);
 

@@ -12,7 +12,7 @@ export default function* loginWatcherSaga() {
 function* loginWorkerSaga({ payload }) {
   try {
     const response = yield call(sendLoginInfo, payload);
-    console.log(response)
+    console.log(response) 
     yield put({ type: LOGIN_SUCCESS, payload: response.payload });
   } catch (e) {
     console.log(e)
@@ -20,24 +20,24 @@ function* loginWorkerSaga({ payload }) {
   }
 }
 
-// function sendLoginInfo(payload) {
-//   return axios.post('http://localhost:5000/login', {
-//     emailOrUsername: payload['emailOrUsername'],
-//     password: payload['password']
-//   })
-// }
-
 function sendLoginInfo(payload) {
-  return fetch('http://localhost:5000/login', {
-    method: 'post',
-    body: JSON.stringify({
-      emailOrUsername: payload['emailOrUsername'],
-      password: payload['password']
-    }),
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-  }).then(response => response.json())
+  return axios.post('http://localhost:5000/login', {
+    emailOrUsername: payload['emailOrUsername'],
+    password: payload['password']
+  })
 }
+
+// function sendLoginInfo(payload) {
+//   return fetch('http://localhost:5000/login', {
+//     method: 'post',
+//     body: JSON.stringify({
+//       emailOrUsername: payload['emailOrUsername'],
+//       password: payload['password']
+//     }),
+//     credentials: 'include',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//   }).then(response => response.json())
+// }
 

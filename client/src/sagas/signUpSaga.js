@@ -13,6 +13,7 @@ function* signUpWorkerSaga({ payload }) {
     const response = yield call(sendSignUpInfo, payload);
     console.log(response)
     yield put({ type: SIGN_UP_SUCCESS, payload: response.data.payload });
+    
   } catch (e) {
     console.log(e)
     yield put({ type: SIGN_UP_FAILED, payload: e });
