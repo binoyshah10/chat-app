@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
           name: 'teamId',
           field: 'team_id',
         },
+        otherKey: {
+          name: 'userId',
+          field: 'user_id',
+        },
       });
     };
   

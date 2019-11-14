@@ -19,7 +19,6 @@
 .loginHeader {
     text-align: center;
     padding-top: 10%;
-    padding-bottom: 5%;
     font-family: 'Roboto', sans-serif;
     font-size: 30px;
 }
@@ -27,6 +26,7 @@
 .text {
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
+    text-align: center;
 }
 
 span {

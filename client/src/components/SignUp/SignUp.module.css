@@ -6,7 +6,7 @@
     background-color: rgb(52, 113, 235);
 }
 
-.loginContainer {
+.signUpContainer {
     margin: 10%; 
     width: 20%;
     height: 56%;
@@ -18,7 +18,7 @@
     min-height: 550px;
 }
 
-.loginHeader {
+.signUpHeader {
     text-align: center;
     padding-top: 10%;
     font-size: 30px;

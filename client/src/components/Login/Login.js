@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
         loggedIn: state.loggedIn,
         loading: state.loading
     };
-  };
+};
 
 
 class Login extends Component {
@@ -40,13 +40,13 @@ class Login extends Component {
 
     componentDidMount() {
         if(this.props.loggedIn) {
-            this.props.history.push('/')
+            this.props.history.push('/team/1')
         }
     }
 
     componentDidUpdate() {
         if(this.props.loggedIn) {
-            this.props.history.push('/')
+            this.props.history.push('/team/1')
         }
     }
 

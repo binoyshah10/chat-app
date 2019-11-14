@@ -3,20 +3,20 @@ import { LOGIN_SUCCESS, LOGIN_CHECK_SUCCESS, LOGIN_CHECK_FAILED } from "../const
 const initialState = {
   user: {},
   loggedIn: false,
-  loading: false
+  loading: false,
+  allTeams: [],
+  selectedTeam: {}
 };
 
 function rootReducer(state = initialState, action) {
 
   if (action.type === LOGIN_SUCCESS) {
-    return Object.assign({}, state, {
-      user: action.payload,
-      loggedIn: true
-    });
+    return { ...state, user: action.payload, loggedIn: true};
   }
 
   if (action.type === LOGIN_CHECK_SUCCESS) {
-    return { 
+    return {
+      ...state, 
       user: action.payload,
       loggedIn: true,
       loading: false

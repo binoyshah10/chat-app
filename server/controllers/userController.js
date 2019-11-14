@@ -8,15 +8,14 @@ const Op = models.Sequelize.Op
 const User = models.User;
 
 exports.signUpUser = (req, res) => {
-    console.log("here")
     const userData = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        username: req.body.password,
+        username: req.body.username,
         password: req.body.password
       }
-    console.log(userData);
+    console.log("aaa" + userData);
     User.findOne({
         where: {
             [Op.or] : [
@@ -29,12 +28,10 @@ exports.signUpUser = (req, res) => {
             ]
         }
     }).then(user => {
-        console.log(user)
         if(!user) {
             // hash password with bcrypt
             bcrypt.hash(req.body.password, 10, (err, hash) => {
                 userData.password = hash
-                console.log('here 2')
                 User.create(userData)
                   .then(user => {
                     res.json({ 
@@ -66,7 +63,6 @@ exports.signUpUser = (req, res) => {
 }
 
 exports.loginUser = (req, res) => {
-    console.log(req.body)
     if(req.body.emailOrUsername && req.body.password) {
         User.findOne({
             where: {
@@ -83,6 +79,7 @@ exports.loginUser = (req, res) => {
             if(user) {
                 if(bcrypt.compareSync(req.body.password, user.password)) {
                     let userData = {
+                        id: user.id,
                         firstName: user.firstName, 
                         lastName: user.lastName, 
                         username: user.username, 
@@ -130,7 +127,9 @@ exports.logoutUser = (req, res) => {
 }
 
 exports.isAuthenticated = (req, res) => {
+    console.log(req.user)
     const userData = {
+        id: req.user.id,
         firstName: req.user.firstName,
         lastName: req.user.lastName,
         username: req.user.username,

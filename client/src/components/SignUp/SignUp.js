@@ -49,12 +49,12 @@ class SignUp extends Component {
     render() {
         return (
             <div className={styles.container}>
-                <div className={styles.loginContainer}>
-                    <h1 className={styles.loginHeader}>Create an Account</h1>
+                <div className={styles.signUpContainer}>
+                    <h1 className={styles.signUpHeader}>Create an Account</h1>
                     <div className={styles.linkWrapper}>
                         <p className={styles.link}>{`Already have an account? `}</p>
-                        <Link to={`/login`}> 
-                            <p className={styles.link}>{`Log In`}</p>
+                        <Link to={`/login`}>
+                            {'Log In'}
                         </Link>
                     </div>
                     <form>
@@ -67,10 +67,9 @@ class SignUp extends Component {
                         <input className={styles.textInput} type="password" placeholder="Password" name="password" onChange={this.handleChange}/>
                         <input className={styles.textInput} type="password" placeholder="Confirm Password" name="confPassword" onChange={this.handleChange}/>
                         <input type="button" value="Sign Up" onClick={this.handleSubmit}/>
-                        <div value="aaaa"></div>
                         {this.state.errors.map(error => (<p className={styles.error} key={error}>Error: {error}</p>))}
                         <Link to={`/forgotpassword`}>
-                            <p>{`Forgot Password?`}</p>
+                            <p className={styles.linkWrapper}>{`Forgot Password?`}</p>
                         </Link>
                     </form>
                 </div>

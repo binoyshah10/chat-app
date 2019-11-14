@@ -29,7 +29,9 @@ class App extends Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" component={RequiresAuth(Chat)} />
+        <Route exact path="/team" component={RequiresAuth(Chat)} />
+        <Route exact path="/team/:id" component={RequiresAuth(Chat)} />
+        <Route exact path="/team/:id/:channel" component={RequiresAuth(Chat)} />
         <Route exact path="/login" component={Login} />
         <Route  exact path="/signup" component={SignUp} />
         <Route exact path="/loading" component={Loading} />

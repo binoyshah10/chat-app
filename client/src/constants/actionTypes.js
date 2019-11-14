@@ -12,3 +12,10 @@ export const LOGIN_CHECK_FAILED = 'LOGIN_CHECK_FAILED';
 export const SIGN_UP = 'SIGN_UP';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILED = 'SIGN_UP_FAILED';
+
+export const GET_ALL_TEAMS = 'GET_ALL_TEAMS';
+export const GET_ALL_TEAMS_SUCCESS = 'GET_ALL_TEAMS_SUCCESS';
+export const GET_ALL_TEAMS_FAILED = 'GET_ALL_TEAMS_FAILED';
+
+
+export const SELECT_TEAM = 'SELECT_TEAM';

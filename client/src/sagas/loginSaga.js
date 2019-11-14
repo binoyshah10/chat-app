@@ -13,7 +13,7 @@ function* loginWorkerSaga({ payload }) {
   try {
     const response = yield call(sendLoginInfo, payload);
     console.log(response) 
-    yield put({ type: LOGIN_SUCCESS, payload: response.payload });
+    yield put({ type: LOGIN_SUCCESS, payload: response.data.payload });
   } catch (e) {
     console.log(e)
     yield put({ type: LOGIN_FAILED, payload: e });

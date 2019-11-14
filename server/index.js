@@ -37,7 +37,7 @@ app.use(jwt({
 app.use(routes);
 
 app.use(function(err, req, res, next) {
-  // console.log(err);
+  console.log(err);
   if(err.name === 'UnauthorizedError') {
     res.status(err.status).send({message:err});
     return;
