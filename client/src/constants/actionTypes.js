@@ -1,8 +1,8 @@
 
 // Login constants
-export const LOGIN = "LOGIN";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_FAILED = "LOGIN_FAILED";
+export const LOGIN = 'LOGIN';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILED = 'LOGIN_FAILED';
 
 export const LOGIN_CHECK = 'LOGIN_CHECK'
 export const LOGIN_CHECK_LOADING = 'LOGIN_CHECK_LOADING'
@@ -19,3 +19,7 @@ export const GET_ALL_TEAMS_FAILED = 'GET_ALL_TEAMS_FAILED';
 
 
 export const SELECT_TEAM = 'SELECT_TEAM';
+
+export const GET_CHANNELS = 'GET_CHANNELS';
+export const GET_CHANNELS_SUCCESS = 'GET_CHANNELS_SUCCESS';
+export const GET_CHANNELS_FAILED = 'GET_CHANNELS_FAILED';

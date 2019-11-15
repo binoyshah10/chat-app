@@ -3,7 +3,8 @@ import {
   LOGIN_CHECK, 
   SIGN_UP,
   GET_ALL_TEAMS,
-  SELECT_TEAM
+  SELECT_TEAM,
+  GET_CHANNELS
 } from "../constants/actionTypes";
 
 export const submitLogin = (payload) => {
@@ -24,4 +25,8 @@ export const getAllTeams = (payload) => {
 
 export const selectTeam = (payload) => {
   return { type: SELECT_TEAM, payload }
+}
+
+export const getChannels = (payload) => {
+  return { type: GET_CHANNELS, payload }
 }

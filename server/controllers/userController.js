@@ -127,7 +127,6 @@ exports.logoutUser = (req, res) => {
 }
 
 exports.isAuthenticated = (req, res) => {
-    console.log(req.user)
     const userData = {
         id: req.user.id,
         firstName: req.user.firstName,

@@ -4,16 +4,20 @@ const models = require('../models');
 const Team = models.Team;
 const User = models.User;
 
-exports.getAllTeams = async (req, res) => {
+exports.getAllTeams = (req, res) => {
     Team.findAll({
+        attributes: ['id','name'],
         include: [{
+            attributes: [],
             model: User,
+            where: { id: req.body.id}
         }]
     }).then(teams => {
-        console.log(teams[0].dataValues, teams[1].dataValues)
+        teams = teams.map(team => team.dataValues)
         res.json({
             success: true,
-            message: 'Authentication successful!',
+            message: 'Queried all teams from DB!',
+            payload: teams
         });
     })
 }
