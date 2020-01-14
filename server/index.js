@@ -47,9 +47,11 @@ app.use(function(err, req, res, next) {
 
 const server = http.createServer(app);
 const io = socketio(server);
+// app.set('socketio', io);
+
+const messaging = require('./lib/socket.js')(io);
 
 models.sequelize.sync().then(() => {
     server.listen(PORT, () => {console.log(`Server has started on ${PORT}`)});
 });
-
 

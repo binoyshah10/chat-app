@@ -6,6 +6,7 @@ const jwt = require('express-jwt');
 const userController = require('../controllers/userController');
 const teamController = require('../controllers/teamController');
 const channelController = require('../controllers/channelController');
+const messageController = require('../controllers/messageController');
 
 // User Routes
 router.post('/signup', userController.signUpUser);
@@ -13,9 +14,12 @@ router.post('/login', userController.loginUser);
 router.post('/logout', userController.logoutUser);
 router.get('/isAuthenticated', userController.isAuthenticated);
 
+// get teams and channels
 router.post('/getAllTeams', teamController.getAllTeams);
+router.post('/getChannels', channelController.getChannelsForTeam);
 
-router.post('/getChannels', channelController.getChannelsForTeam)
+// get messages
+router.post('/getMessages', messageController.getMessages);
 
 router.get('/', (req, res) => {
     res.send('hello');

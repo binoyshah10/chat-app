@@ -13,7 +13,9 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         loggedIn: state.loggedIn,
-        loading: state.loading
+        loading: state.loading,
+        selectedTeam: state.selectedTeam,
+        selectedChannel: state.selectedChannel
     };
 };
 
@@ -40,13 +42,13 @@ class Login extends Component {
 
     componentDidMount() {
         if(this.props.loggedIn) {
-            this.props.history.push('/team/1')
+            this.props.history.push('/team/1/channel/1')
         }
     }
 
     componentDidUpdate() {
         if(this.props.loggedIn) {
-            this.props.history.push('/team/1')
+            this.props.history.push('/team/1/channel/1')
         }
     }
 

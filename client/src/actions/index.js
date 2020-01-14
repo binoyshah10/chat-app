@@ -4,7 +4,9 @@ import {
   SIGN_UP,
   GET_ALL_TEAMS,
   SELECT_TEAM,
-  GET_CHANNELS
+  GET_CHANNELS,
+  SELECT_CHANNEL,
+  GET_MESSAGES
 } from "../constants/actionTypes";
 
 export const submitLogin = (payload) => {
@@ -29,4 +31,24 @@ export const selectTeam = (payload) => {
 
 export const getChannels = (payload) => {
   return { type: GET_CHANNELS, payload }
+}
+
+export const selectChannel = (payload) => {
+  return { type: SELECT_CHANNEL, payload }
+}
+
+export const connectSocket = () => {
+  return { type: 'SOCKET_CONNECT' }
+}
+
+export const disconnectSocket = () => {
+  return { type: 'SOCKET_DISCONNECT' }
+}
+
+export const sendSocketMessage = (payload) => {
+  return { type: 'SEND_SOCKET_MESSAGE', payload }
+}
+
+export const getMessages = (payload) => {
+  return { type: GET_MESSAGES, payload }
 }

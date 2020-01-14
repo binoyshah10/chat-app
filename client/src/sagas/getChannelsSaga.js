@@ -9,9 +9,9 @@ export default function* getChannelsWatcherSaga() {
 
 function*getChannelsWorkerSaga({ payload }) {
   try {
-    console.log(payload)
+    // console.log(payload)
     let response = yield call(getChannels, payload);
-    console.log(response)
+    // console.log(response)
     yield put({ type: GET_CHANNELS_SUCCESS, payload: response.data.payload });
   } catch (e) {
     console.log(e)
@@ -20,8 +20,6 @@ function*getChannelsWorkerSaga({ payload }) {
 }
 
 function getChannels(team) {
-    console.log('here')
-    console.log(team)
     return axios.post('http://localhost:5000/getChannels', {
         teamId: team['id'],
         teamName: team['name'],

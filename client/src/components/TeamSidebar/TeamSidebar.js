@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { getAllTeams, selectTeam } from "../../actions/index";
+import { withRouter } from "react-router";
 import styles from './TeamSidebar.module.css';
 
 const mapDispatchToProps = (dispatch) => {
@@ -26,16 +27,16 @@ class TeamSidebar extends Component {
     }
 
     componentDidUpdate() {
-        console.log(this.props.allTeams)
-        console.log(this.props.selectedTeam)
         if (this.props.allTeams.length > 0 && Object.entries(this.props.selectedTeam).length === 0) {
             const firstTeam = this.props.allTeams[0];
-            this.props.selectTeam(firstTeam);
+            // this.props.selectTeam(firstTeam);
+            this.handleSelectTeam(firstTeam);
         }
     }
 
-    handleSelectTeam = (event) => {
-        console.log(event.target.id);
+    handleSelectTeam = (team) => {
+        this.props.selectTeam(team);
+        this.props.history.push(`/team/${team.id}/channel/1`);
     }
 
     render() {
@@ -43,7 +44,7 @@ class TeamSidebar extends Component {
             <div>
                 <ul>
                     {this.props.allTeams.map(team => {
-                        return <li className={styles.teamListItem} key={team.id} id={team.id} onClick={(event) => this.handleSelectTeam(event)}>
+                        return <li className={styles.teamListItem} key={team.id} onClick={() => this.handleSelectTeam(team)}>
                             {team.name[0].toUpperCase()}
                         </li>
                     })}
@@ -53,4 +54,4 @@ class TeamSidebar extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TeamSidebar)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TeamSidebar));

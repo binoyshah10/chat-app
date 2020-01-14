@@ -86,7 +86,7 @@ exports.loginUser = (req, res) => {
                         email: user.email
                     };
                     let jwtToken = jwt.sign(userData, process.env.JWT_SECRET, {
-                        expiresIn: 1440,
+                        expiresIn: '1h',
                         subject: user.dataValues.username,
                       })
                     res.cookie('jwt', jwtToken, { httpOnly: true })

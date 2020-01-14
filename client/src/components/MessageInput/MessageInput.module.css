@@ -1,0 +1,13 @@
+.MessageInput {
+    height: 5vh;
+    width: 90%;
+    font-size: 14px;
+    border-color: rgb(240, 240, 240);
+    border-style:solid;
+    padding-left: 2%;
+}
+
+.MessageInputContainer {
+    display: flex;
+    justify-content: center;
+}

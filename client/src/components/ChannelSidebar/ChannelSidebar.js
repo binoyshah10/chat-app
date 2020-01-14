@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { getChannels } from "../../actions/index";
+import { withRouter } from "react-router";
+import { getChannels, selectChannel, sendSocketMessage } from "../../actions/index";
 import styles from './ChannelSidebar.module.css';
 import _ from 'lodash/core';
 
 const mapDispatchToProps = (dispatch) => {
     return {
         getChannels: (payload) => dispatch(getChannels(payload)),
+        selectChannel: (payload) => dispatch(selectChannel(payload)),
+        sendSocketMessage: (payload) => dispatch(sendSocketMessage(payload))
     };
 }
 
@@ -14,7 +17,8 @@ const mapStateToProps = (state) => {
     return {
         user: state.user,
         selectedTeam: state.selectedTeam,
-        channels: state.channelsForTeam
+        channels: state.channelsForTeam,
+        selectedChannel: state.selectedChannel
     };
 };
 
@@ -30,12 +34,27 @@ class ChannelSidebar extends Component {
             this.setState({selectedTeam: this.props.selectedTeam});
             this.props.getChannels(this.props.selectedTeam)
         }
-        console.log("channels")
-        console.log(this.props.channels)
+
+        if (this.props.channels.length > 0 && Object.entries(this.props.selectedChannel).length === 0) {
+            const firstChannel = this.props.channels[0];
+            // this.props.selectChannel(firstChannel);
+            this.handleSelectChannel(firstChannel);
+        }
     }
 
-    handleSelectChannel = (event) => {
-        console.log(event);
+    handleSelectChannel = (channel) => {
+        this.props.selectChannel(channel);
+
+        const payload = {
+            socketChannel: 'setTeamChannel',
+            data: {
+                team: this.props.selectedTeam,
+                channel: channel
+            }
+        }
+
+        this.props.sendSocketMessage(payload);
+        this.props.history.push(`/team/${this.props.selectedTeam.id}/channel/${channel.id}`);
     }
 
     render() {
@@ -53,7 +72,7 @@ class ChannelSidebar extends Component {
                     <p>{'Channels'}</p>
                     <ul>
                         {this.props.channels.map(channel => {
-                            return <li className={styles.channel} key={channel.id} id={channel.id} onClick={(event) => this.handleSelectChannel(event)}>
+                            return <li className={styles.channel} key={channel.id} onClick={() => this.handleSelectChannel(channel)}>
                                 {`#${channel.name}`}
                              </li>
                         })}
@@ -68,4 +87,4 @@ class ChannelSidebar extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChannelSidebar)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ChannelSidebar));

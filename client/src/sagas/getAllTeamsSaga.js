@@ -9,9 +9,9 @@ export default function* getAllTeamsWatcherSaga() {
 
 function*getAllTeamsWorkerSaga({ payload }) {
   try {
-    console.log(payload)
+    // console.log(payload)
     let response = yield call(getAllTeams, payload);
-    console.log(response)
+    // console.log(response)
     yield put({ type: GET_ALL_TEAMS_SUCCESS, payload: response.data.payload });
   } catch (e) {
     console.log(e)

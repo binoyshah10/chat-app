@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Login from '../../components/Login/Login';
 import SignUp from '../../components/SignUp/SignUp';
 import { connect } from "react-redux";
@@ -29,11 +29,14 @@ class App extends Component {
   render() {
     return (
       <Switch>
+        <Route exact path="/" >
+          <Redirect to="/login" />
+        </Route>
         <Route exact path="/team" component={RequiresAuth(Chat)} />
         <Route exact path="/team/:id" component={RequiresAuth(Chat)} />
-        <Route exact path="/team/:id/:channel" component={RequiresAuth(Chat)} />
+        <Route exact path="/team/:teamId/channel/:channelId" component={RequiresAuth(Chat)} />
         <Route exact path="/login" component={Login} />
-        <Route  exact path="/signup" component={SignUp} />
+        <Route exact path="/signup" component={SignUp} />
         <Route exact path="/loading" component={Loading} />
       </Switch>
     )
