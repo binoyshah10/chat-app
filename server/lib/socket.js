@@ -23,7 +23,6 @@ module.exports = (io) => {
         // subscribing to channels
         socket.on('setTeamChannel', data => {
             console.log('Subscribed channels ' + subscribedChannels.toString());
-
             const { team, channel } = data;
             const redisChannel = `${team.name}-${channel.name}`;
 
@@ -35,7 +34,6 @@ module.exports = (io) => {
         })
     
         socket.on('sendMessage', data => {
-            // console.log(data);
             data['createdAt'] = new Date();
 
             const { team, channel } = data;

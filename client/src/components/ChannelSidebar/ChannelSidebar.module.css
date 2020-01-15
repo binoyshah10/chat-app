@@ -10,14 +10,15 @@ p {
 }
 
 .user {
-    font-size: 14px;
-    color: white;
+    font-size: 16px;
+    /* color: #898b9e; */
+    color: #9193a3;
 }
 
 .channelsHeading {
     margin-top: 60px;
     font-size: 16px;
-    color: white;
+    color: #9193a3;
 }
 
 .channel {
@@ -26,6 +27,7 @@ p {
     font-size: 14px;
     height: 20px;
     padding: 6px 0 0 20px;
+    color: #9193a3;
 }
 
 .channel:hover {
@@ -35,5 +37,5 @@ p {
 .directMessages {
     margin-top: 60px;
     font-size: 16px;
-    color: white;
+    color: #9193a3;
 }

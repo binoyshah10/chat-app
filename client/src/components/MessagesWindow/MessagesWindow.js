@@ -24,16 +24,15 @@ class MessagesWindow extends Component {
         return (
             <div className={styles.messagesWindowContainer}>
                 {this.props.messages[teamChannelName] && 
-                this.props.messages[teamChannelName].map((messageData, index) => 
-                    <div ref={(ref) => this.newData = ref}  key={index}> 
-                        <Message 
-                           name={messageData.user.firstName} 
-                           message={messageData.message} 
-                           createdAt={messageData.createdAt} 
-                           key={index}
-                       />
-                    </div>
+                this.props.messages[teamChannelName].map((messageData, index) =>      
+                    <Message 
+                        name={messageData.user.firstName} 
+                        message={messageData.message} 
+                        createdAt={messageData.createdAt} 
+                        key={index}
+                    />
                 )}
+                <div ref={(ref) => this.newData = ref} />
             </div>
         )
     }

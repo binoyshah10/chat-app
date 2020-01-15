@@ -63,7 +63,6 @@ function rootReducer(state = initialState, action) {
   if (action.type === GET_MESSAGES_SUCCESS) {
     const teamChannelName = action.payload['teamChannelName']
     const messages = action.payload['messages'].reverse()
-    console.log(action.payload)
     return { 
       ...state, 
       messages: {
