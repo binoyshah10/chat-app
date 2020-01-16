@@ -32,8 +32,7 @@ class App extends Component {
         <Route exact path="/" >
           <Redirect to="/login" />
         </Route>
-        <Route exact path="/team" component={RequiresAuth(Chat)} />
-        <Route exact path="/team/:id" component={RequiresAuth(Chat)} />
+        <Route exact path="/chat" component={RequiresAuth(Chat)} />
         <Route exact path="/team/:teamId/channel/:channelId" component={RequiresAuth(Chat)} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />

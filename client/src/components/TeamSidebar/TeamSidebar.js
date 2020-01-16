@@ -4,6 +4,9 @@ import { getAllTeams, selectTeam, getChannels, selectChannel } from "../../actio
 import { withRouter } from "react-router";
 import styles from './TeamSidebar.module.css';
 import _ from 'lodash/core';
+import { MdAdd } from 'react-icons/md';
+import ReactModal from 'react-modal';
+import AddTeam from '../AddTeam/AddTeam';
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -28,12 +31,14 @@ class TeamSidebar extends Component {
 
     state = {
         selectedTeam: {},
-        channels: {}
+        channels: {},
+        isOpen: false
     }
 
     componentDidMount() {
         console.log(this.props.user)
         this.props.getAllTeams(this.props.user);
+        ReactModal.setAppElement('body')
     }
 
     componentDidUpdate() {
@@ -61,6 +66,14 @@ class TeamSidebar extends Component {
         this.props.selectTeam(team);
     }
 
+    handleAddTeam = () => {
+        this.setState({ isOpen: true })
+    }
+
+    closeModal = () => {
+        this.setState({ isOpen: false })
+    }
+
     render() {
         return (
             <div>
@@ -70,6 +83,42 @@ class TeamSidebar extends Component {
                             {team.name[0].toUpperCase()}
                         </li>
                     })}
+                    <li className={styles.teamListItem} onClick={this.handleAddTeam}>
+                        <MdAdd />
+                    </li>
+                    <ReactModal 
+                        isOpen={this.state.isOpen}
+                        onRequestClose={this.closeModal}
+                        // className={styles.addTeamModal}
+                        // overlayClassName={styles.modalOverlay}
+
+                        style={{
+                            overlay: {
+                              position: 'fixed',
+                              top: 0,
+                              left: 0,
+                              right: 0,
+                              bottom: 0,
+                              backgroundColor: 'rgba(0, 0, 0, 0.75)'
+                            },
+                            content: {
+                              position: 'absolute',
+                              marginTop: '150px',
+                              marginLeft: '400px',
+                              marginRight: '400px',
+                              marginBottom: '200px',
+                              border: '1px solid #ccc',
+                              background: '#fff',
+                              overflow: 'auto',
+                              WebkitOverflowScrolling: 'touch',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              height: '200px',
+                            }
+                          }}
+                    >
+                        <AddTeam closeModal={this.closeModal}/>
+                    </ReactModal>
                 </ul>
             </div>
         )

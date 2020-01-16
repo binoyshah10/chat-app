@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import { getChannels, selectChannel, sendSocketMessage } from "../../actions/index";
 import styles from './ChannelSidebar.module.css';
 import _ from 'lodash/core';
+import { MdAddCircleOutline } from 'react-icons/md';
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -26,7 +27,8 @@ const mapStateToProps = (state) => {
 class ChannelSidebar extends Component {
 
     state = {
-        selectedTeam: {}
+        selectedTeam: {},
+        channel: {}
     }
 
     componentDidUpdate() {
@@ -38,7 +40,13 @@ class ChannelSidebar extends Component {
         if (this.props.channels.length > 0 && Object.entries(this.props.selectedChannel).length === 0) {
             const firstChannel = this.props.channels[0];
             // this.props.selectChannel(firstChannel);
+            this.setState({ channel: firstChannel });
             this.handleSelectChannel(firstChannel);
+        }
+
+        if(!_.isEqual(this.state.channel, this.props.selectedChannel)) {
+            this.setState({ channel: this.props.selectedChannel });
+            this.handleSelectChannel(this.props.selectedChannel);
         }
     }
 
@@ -68,8 +76,13 @@ class ChannelSidebar extends Component {
                     <p>{this.props.user.firstName + ' ' + this.props.user.lastName}</p>
                 </div>
 
-                <div className={styles.channelsHeading}>
-                    <p>{'Channels'}</p>
+                <div >
+                    <div className={styles.channelsHeading}>
+                        {'Channels'}
+                        <div className={styles.channelAdd}>
+                            <MdAddCircleOutline />
+                        </div>
+                    </div>
                     <ul>
                         {this.props.channels.map(channel => {
                             return <li className={styles.channel} key={channel.id} onClick={() => this.handleSelectChannel(channel)}>

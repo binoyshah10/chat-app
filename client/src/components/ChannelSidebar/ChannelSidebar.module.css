@@ -1,5 +1,5 @@
 p {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
     text-align: left;
     margin: 20px 0 0 20px;
 }
@@ -16,13 +16,18 @@ p {
 }
 
 .channelsHeading {
+    font-family: 'Lato', sans-serif;
+    text-align: left;
+    margin: 20px 0 0 20px;
+    display: inline-block;
     margin-top: 60px;
     font-size: 16px;
     color: #9193a3;
+    width: 160px;
 }
 
 .channel {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
     margin: 10px 0 0 0px;
     font-size: 14px;
     height: 20px;
@@ -39,3 +44,13 @@ p {
     font-size: 16px;
     color: #9193a3;
 }
+
+.channelAdd {
+    float: right;
+}
+
+.channelAdd:hover {
+    float: right;
+    color: white;
+}
+

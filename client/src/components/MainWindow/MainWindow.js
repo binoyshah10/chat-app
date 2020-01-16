@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import MessagesWindow from '../MessagesWindow/MessagesWindow';
+import { withRouter } from "react-router";
 import styles from './MainWindow.module.css';
 import { connectSocket, sendSocketMessage, getMessages } from '../../actions/index';
+import MessagesWindow from '../MessagesWindow/MessagesWindow';
 import MessageInput from '../MessageInput/MessageInput';
 
 const mapDispatchToProps = (dispatch) => {
@@ -29,24 +30,6 @@ class MainWindow extends Component {
         message: ''
     }   
 
-    // handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     const { message } = this.state;
-
-    //     const payload = {
-    //         socketChannel: 'sendMessage',
-    //         data: {
-    //             team: this.props.selectedTeam,
-    //             channel: this.props.selectedChannel,
-    //             message: message,
-    //             user: this.props.user
-    //         }
-    //     }
-
-    //     this.props.sendSocketMessage(payload);
-    //     this.setState({message: ''});
-    // }
-
     componentDidMount() {
         this.props.connectSocket();
     }
@@ -63,12 +46,6 @@ class MainWindow extends Component {
          }
     }
 
-    // handleChange = (event) => {
-    //     this.setState({
-    //         [event.target.name]: event.target.value 
-    //     })
-    // }
-
     render() {
         return (
             <div>
@@ -81,4 +58,4 @@ class MainWindow extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainWindow);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainWindow));

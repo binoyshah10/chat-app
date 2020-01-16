@@ -14,11 +14,14 @@ router.post('/login', userController.loginUser);
 router.post('/logout', userController.logoutUser);
 router.get('/isAuthenticated', userController.isAuthenticated);
 
-// get teams and channels
+// Teams routes
 router.post('/getAllTeams', teamController.getAllTeams);
+router.post('/addTeam', teamController.addTeam);
+
+// Channel routes
 router.post('/getChannels', channelController.getChannelsForTeam);
 
-// get messages
+// Message routes
 router.post('/getMessages', messageController.getMessages);
 
 router.get('/', (req, res) => {

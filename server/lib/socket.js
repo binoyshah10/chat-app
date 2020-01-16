@@ -45,7 +45,7 @@ module.exports = (io) => {
 
         
         sub.on("message", (channel, data) => {
-            // console.log("sub channel " + channel + ": " + data);
+            console.log("sub channel " + channel + ": " + data);
             io.emit('receiveMessage', JSON.parse(data));
             
             io.clients((error, clients) => {

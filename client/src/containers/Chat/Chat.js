@@ -21,7 +21,6 @@ export default class Chat extends Component {
                    <ChannelSidebar />
                 </div>
 
-
                 <div className={styles.main}>
                     <MainWindow />
                 </div>

@@ -42,13 +42,13 @@ class Login extends Component {
 
     componentDidMount() {
         if(this.props.loggedIn) {
-            this.props.history.push('/team/1/channel/1')
+            this.props.history.push('/chat')
         }
     }
 
     componentDidUpdate() {
         if(this.props.loggedIn) {
-            this.props.history.push('/team/1/channel/1')
+            this.props.history.push('/chat')
         }
     }
 
@@ -74,4 +74,4 @@ class Login extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

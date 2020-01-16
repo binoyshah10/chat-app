@@ -5,6 +5,7 @@ import signUpSaga from "../sagas/signUpSaga";
 import getAllTeamsSaga from "../sagas/getAllTeamsSaga";
 import getChannelsSaga from '../sagas/getChannelsSaga';
 import getMessagesSaga from '../sagas/getMessagesSaga';
+import addTeamSaga from '../sagas/addTeamSaga';
 
 export default function* rootSaga() {
     yield all([
@@ -13,6 +14,7 @@ export default function* rootSaga() {
         fork(signUpSaga),
         fork(getAllTeamsSaga),
         fork(getChannelsSaga),
-        fork(getMessagesSaga)
+        fork(getMessagesSaga),
+        fork(addTeamSaga),
     ]);
 }

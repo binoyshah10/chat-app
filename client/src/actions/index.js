@@ -6,7 +6,8 @@ import {
   SELECT_TEAM,
   GET_CHANNELS,
   SELECT_CHANNEL,
-  GET_MESSAGES
+  GET_MESSAGES,
+  ADD_TEAM
 } from "../constants/actionTypes";
 
 export const submitLogin = (payload) => {
@@ -51,4 +52,8 @@ export const sendSocketMessage = (payload) => {
 
 export const getMessages = (payload) => {
   return { type: GET_MESSAGES, payload }
+}
+
+export const addTeam = (payload) => {
+  return { type: ADD_TEAM, payload }
 }
