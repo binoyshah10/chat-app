@@ -23,7 +23,8 @@ const mapStateToProps = (state) => {
         allTeams: state.allTeams,
         selectedTeam: state.selectedTeam,
         channels: state.channelsForTeam,
-        selectedChannel: state.selectedChannel
+        selectedChannel: state.selectedChannel,
+        addTeamInfo: state.addTeam
     };
 };
 
@@ -42,9 +43,11 @@ class TeamSidebar extends Component {
     }
 
     componentDidUpdate() {
+
+        this.props.getAllTeams(this.props.user);
+
         if (this.props.allTeams.length > 0 && Object.entries(this.props.selectedTeam).length === 0) {
             const firstTeam = this.props.allTeams[0];
-            // this.props.selectTeam(firstTeam);
             this.setState({ selectedTeam: firstTeam });
             this.handleSelectTeam(firstTeam);
         }
@@ -104,8 +107,8 @@ class TeamSidebar extends Component {
                             content: {
                               position: 'absolute',
                               marginTop: '150px',
-                              marginLeft: '400px',
-                              marginRight: '400px',
+                              marginLeft: '20%',
+                              marginRight: '20%',
                               marginBottom: '200px',
                               border: '1px solid #ccc',
                               background: '#fff',

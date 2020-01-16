@@ -5,6 +5,8 @@ import { getChannels, selectChannel, sendSocketMessage } from "../../actions/ind
 import styles from './ChannelSidebar.module.css';
 import _ from 'lodash/core';
 import { MdAddCircleOutline } from 'react-icons/md';
+import ReactModal from 'react-modal';
+import AddChannel from '../AddChannel/AddChannel';
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -28,7 +30,8 @@ class ChannelSidebar extends Component {
 
     state = {
         selectedTeam: {},
-        channel: {}
+        channel: {},
+        isOpen: false
     }
 
     componentDidUpdate() {
@@ -65,6 +68,14 @@ class ChannelSidebar extends Component {
         this.props.history.push(`/team/${this.props.selectedTeam.id}/channel/${channel.id}`);
     }
 
+    addChannel = () => {
+        this.setState({ isOpen: true });
+    }
+
+    closeModal = () => {
+        this.setState({ isOpen: false });
+    }
+
     render() {
         return (
             <div>
@@ -79,7 +90,7 @@ class ChannelSidebar extends Component {
                 <div >
                     <div className={styles.channelsHeading}>
                         {'Channels'}
-                        <div className={styles.channelAdd}>
+                        <div className={styles.channelAdd} onClick={this.addChannel}>
                             <MdAddCircleOutline />
                         </div>
                     </div>
@@ -95,6 +106,37 @@ class ChannelSidebar extends Component {
                 <div className={styles.directMessages}>
                     <p>{'Direct Messages'}</p>
                 </div>
+
+                <ReactModal 
+                        isOpen={this.state.isOpen}
+                        onRequestClose={this.closeModal}
+                        style={{
+                            overlay: {
+                              position: 'fixed',
+                              top: 0,
+                              left: 0,
+                              right: 0,
+                              bottom: 0,
+                              backgroundColor: 'rgba(0, 0, 0, 0.75)'
+                            },
+                            content: {
+                              position: 'absolute',
+                              marginTop: '150px',
+                              marginLeft: '20%',
+                              marginRight: '20%',
+                              marginBottom: '200px',
+                              border: '1px solid #ccc',
+                              background: '#fff',
+                              overflow: 'auto',
+                              WebkitOverflowScrolling: 'touch',
+                              borderRadius: '4px',
+                              outline: 'none',
+                              height: '200px',
+                            }
+                          }}
+                    >
+                        <AddChannel closeModal={this.closeModal}/>
+                    </ReactModal>
             </div>
         )
     }

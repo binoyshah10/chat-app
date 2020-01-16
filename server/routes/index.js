@@ -20,6 +20,7 @@ router.post('/addTeam', teamController.addTeam);
 
 // Channel routes
 router.post('/getChannels', channelController.getChannelsForTeam);
+router.post('/addChannel', channelController.addChannel);
 
 // Message routes
 router.post('/getMessages', messageController.getMessages);

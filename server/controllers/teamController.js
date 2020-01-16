@@ -33,21 +33,22 @@ exports.addTeam = (req, res) => {
         }
     }).then(team => {
         if(!team) {
-                console.log(teamName)
                 Team.create({ name: teamName })
                     .then(team => {
-                        console.log(team)
                         // Associate user and team
                         team.setUsers(user.id);  
-                        console.log(team)
                         // Create new channel
                         Channel.create({ name: 'general' })
                             .then(channel => {
-                                console.log(channel)
                                 channel.setTeam(team.id);
+                                channel.setUsers(user.id);  
                                 res.json({ 
                                     success: true,
-                                    message: `Team ${team.name} and channel ${channel.name} were created`
+                                    message: `Team ${team.name} and channel ${channel.name} were created`,
+                                    payload: {
+                                        team: {id: team.id, name: team.name},
+                                        channel: {id: channel.id, name: channel.name, public: channel.public, dm: channel.dm}
+                                    }
                                 })
                             })
                             .catch(err => {

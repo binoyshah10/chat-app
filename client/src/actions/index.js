@@ -7,7 +7,9 @@ import {
   GET_CHANNELS,
   SELECT_CHANNEL,
   GET_MESSAGES,
-  ADD_TEAM
+  ADD_TEAM,
+  RESET_ADD_TEAM,
+  ADD_CHANNEL
 } from "../constants/actionTypes";
 
 export const submitLogin = (payload) => {
@@ -56,4 +58,12 @@ export const getMessages = (payload) => {
 
 export const addTeam = (payload) => {
   return { type: ADD_TEAM, payload }
+}
+
+export const resetAddTeam = () => {
+  return { type: RESET_ADD_TEAM }
+}
+
+export const addChannel = (payload) => {
+  return { type: ADD_CHANNEL, payload }
 }
