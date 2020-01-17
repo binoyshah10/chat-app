@@ -34,11 +34,11 @@ exports.storeMessage = (data) => {
                 if(res === 0) { // list for channel does not exists
                     const channelList = [redisChannel, JSON.stringify(data)]
                     lpushAsync(channelList).then(res => {
-                        client.ltrim(redisChannel, 0, 50);   // trim redis list to 25 messages
+                        client.ltrim(redisChannel, 0, 24);   // trim redis list to 25 messages
                     })
                 } else {
                     lpushAsync(redisChannel, JSON.stringify(data)).then(res => {
-                        client.ltrim(redisChannel, 0, 50);   // trim redis list to 25 messages
+                        client.ltrim(redisChannel, 0, 24);   // trim redis list to 25 messages
                     })
                 }
             })

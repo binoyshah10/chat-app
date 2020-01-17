@@ -21,7 +21,8 @@ const mapStateToProps = (state) => {
         user: state.user,
         selectedTeam: state.selectedTeam,
         channels: state.channelsForTeam,
-        selectedChannel: state.selectedChannel
+        selectedChannel: state.selectedChannel,
+        addChannelInfo: state.addChannel
     };
 };
 

@@ -9,7 +9,9 @@ import {
   SELECT_CHANNEL,
   GET_MESSAGES_SUCCESS,
   ADD_TEAM_SUCCESS,
-  RESET_ADD_TEAM
+  RESET_ADD_TEAM,
+  ADD_CHANNEL_SUCCESS,
+  RESET_ADD_CHANNEL
 } from "../constants/actionTypes";
 
 const initialState = {
@@ -102,6 +104,21 @@ function rootReducer(state = initialState, action) {
     return {
       ...state, 
       addTeam: {}
+    }
+  }
+
+  if (action.type === ADD_CHANNEL_SUCCESS) {
+    const { channel } = action.payload;
+    return {
+      ...state,
+      addChannel: { channel }
+    }
+  }
+
+  if (action.type === RESET_ADD_CHANNEL) {
+    return {
+      ...state, 
+      addChannel: {}
     }
   }
 

@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import styles from './AddChannel.module.css';
-import { addChannel, resetAddTeam } from '../../actions/index'
+import { addChannel, selectChannel, resetAddChannel } from '../../actions/index'
 
 const mapDispatchToProps = (dispatch) => {
     return {
         addChannel: payload => dispatch(addChannel(payload)),
+        selectChannel: (payload) => dispatch(selectChannel(payload)),
+        resetAddChannel: () => dispatch(resetAddChannel()),
     };
 }
 
@@ -33,7 +35,7 @@ class AddChannel extends Component {
 
     handleChange = (event) => {
         this.setState({
-            teamName: event.target.value 
+            channelName: event.target.value 
         })
     }
 
@@ -42,13 +44,13 @@ class AddChannel extends Component {
     }
 
     componentDidUpdate() {
-        // if (Object.entries(this.props.addTeamInfo).length > 0) {
-        //     const { team, channel } = this.props.addTeamInfo;
-        //     this.props.resetAddTeam();
-        //     this.handleCancel();
-        //     this.props.selectTeam(team);
-        //     this.props.history.push(`/team/${team.id}/channel/${channel.id}`);
-        // }
+        if (Object.entries(this.props.addChannelInfo).length > 0) {
+            const { channel } = this.props.addChannelInfo;
+            this.props.resetAddChannel();
+            this.handleCancel();
+            this.props.selectChannel(channel);
+            this.props.history.push(`/team/${this.props.selectedTeam.id}/channel/${channel.id}`);
+        }
     }
 
     render() {

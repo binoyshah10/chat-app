@@ -15,7 +15,7 @@ class MessagesWindow extends Component {
 
     componentDidUpdate() {
         if (Object.entries(this.props.messages).length !== 0) {
-            this.newData.scrollIntoView({ behavior: "smooth" })
+            this.newData.scrollIntoView()
         }
     }
 

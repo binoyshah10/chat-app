@@ -9,8 +9,9 @@ export default function* addChannelWatcherSaga() {
 
 function* addChannelWorkerSaga({ payload }) {
   try {
+    //   console.log(payload)
     const response = yield call(addChannel, payload);
-    console.log(response) 
+    // console.log(response) 
     yield put({ type: ADD_CHANNEL_SUCCESS, payload: response.data.payload });
   } catch (e) {
     console.log(e)
@@ -19,9 +20,10 @@ function* addChannelWorkerSaga({ payload }) {
 }
 
 function addChannel(payload) {
-  return axios.post('http://localhost:5000/addChannel', {
-    channelName: payload.channelName,
-    team: payload.team,
-    user: payload.user
-  })
+    console.log(payload)
+    return axios.post('http://localhost:5000/addChannel', {
+        channelName: payload.channelName,
+        team: payload.team,
+        user: payload.user
+    })
 }

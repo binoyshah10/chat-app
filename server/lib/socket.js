@@ -22,7 +22,7 @@ module.exports = (io) => {
     
         // subscribing to channels
         socket.on('setTeamChannel', data => {
-            console.log('Subscribed channels ' + subscribedChannels.toString());
+            // console.log('Subscribed channels ' + subscribedChannels.toString());
             const { team, channel } = data;
             const redisChannel = `${team.name}-${channel.name}`;
 
