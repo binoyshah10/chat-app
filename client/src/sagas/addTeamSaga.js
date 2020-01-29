@@ -10,7 +10,7 @@ export default function* addTeamWatcherSaga() {
 function* addTeamWorkerSaga({ payload }) {
   try {
     const response = yield call(addTeam, payload);
-    console.log(response) 
+    // console.log(response) 
     yield put({ type: ADD_TEAM_SUCCESS, payload: response.data.payload });
   } catch (e) {
     console.log(e)

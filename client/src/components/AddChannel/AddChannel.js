@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import styles from './AddChannel.module.css';
-import { addChannel, selectChannel, resetAddChannel } from '../../actions/index'
+import { addChannel, selectChannel, resetAddChannel, getChannels } from '../../actions/index'
 
 const mapDispatchToProps = (dispatch) => {
     return {
         addChannel: payload => dispatch(addChannel(payload)),
         selectChannel: (payload) => dispatch(selectChannel(payload)),
         resetAddChannel: () => dispatch(resetAddChannel()),
+        getChannels: (payload) => dispatch(getChannels(payload)),
     };
 }
 
@@ -49,6 +50,7 @@ class AddChannel extends Component {
             this.props.resetAddChannel();
             this.handleCancel();
             this.props.selectChannel(channel);
+            this.props.getChannels(this.props.selectedTeam);
             this.props.history.push(`/team/${this.props.selectedTeam.id}/channel/${channel.id}`);
         }
     }

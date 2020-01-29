@@ -1,0 +1,21 @@
+.menu {
+    background-color: #f4f4f4;
+    margin: 10px 0 0 20px;
+    font-family: 'Lato', sans-serif;
+    border-radius: 4px;
+}
+
+.menu li {
+    color: black;
+    font-size: 16px;
+    margin: 10px;
+    min-width: 100px;
+}
+
+.dropdownTitle {
+    display: inline-block;
+    font-family: 'Lato', sans-serif;
+    text-align: left;
+    margin: 20px 0 0 20px;
+    cursor: pointer;
+}

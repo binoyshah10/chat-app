@@ -40,23 +40,40 @@ exports.addChannel = (req, res) => {
         if(!channel) {
                 Channel.create({ name: channelName })
                     .then(channel => {
-                        // Associate user and team
+                        // Associate team with this channel
                         channel.setTeam(team.id);
-                        channel.setUsers(user.id);  
-                        res.json({ 
-                            success: true,
-                            message: `Channel ${channel.name} was created`,
-                            payload: {
-                                channel: {id: channel.id, name: channel.name, public: channel.public, dm: channel.dm}
+
+                        User.findAll({
+                            include: [{
+                                attributes: [],
+                                model: Team,
+                                where: { id: team.id }
+                            }]
+                        }).then(users => {
+                            if(users) {
+                                channel.addUsers(users);
                             }
+                            res.json({ 
+                                success: true,
+                                message: `Channel ${channel.name} was created`,
+                                payload: {
+                                    channel: {id: channel.id, name: channel.name, public: channel.public, dm: channel.dm}
+                                }
+                            })
+                        })
+                        .catch(err => {
+                            res.json({
+                                success: false,
+                                message: `Channel couldn't be created ${err}`
+                            })
                         })
                     })
                     .catch(err => {
                         console.log(err)
-                    res.json({
-                        success: false,
-                        message: `Channel couldn't be created ${err}`
-                    })
+                        res.json({
+                            success: false,
+                            message: `Channel couldn't be created ${err}`
+                        })
                   })
         }
         else {

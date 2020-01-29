@@ -1,4 +1,5 @@
 import {  
+  SIGN_UP_SUCCESS,
   LOGIN_SUCCESS, 
   LOGIN_CHECK_SUCCESS, 
   LOGIN_CHECK_FAILED, 
@@ -11,7 +12,11 @@ import {
   ADD_TEAM_SUCCESS,
   RESET_ADD_TEAM,
   ADD_CHANNEL_SUCCESS,
-  RESET_ADD_CHANNEL
+  RESET_ADD_CHANNEL,
+  SOCKET_MESSAGE_RECEIVED,
+  ADD_USERS_TEAM_SUCCESS,
+  ADD_USERS_TEAM_RESET,
+  LOGOUT_SUCCESS,
 } from "../constants/actionTypes";
 
 const initialState = {
@@ -25,12 +30,22 @@ const initialState = {
   messages: {},
   addTeam: {},
   addChannel: {},
+  addUsersToTeamCompleted: false,
+  loggedOut: false
 };
 
 function rootReducer(state = initialState, action) {
 
+  if (action.type === SIGN_UP_SUCCESS) {
+    return { ...state, user: action.payload, loggedIn: true, loggedOut: false };
+  }
+
   if (action.type === LOGIN_SUCCESS) {
-    return { ...state, user: action.payload, loggedIn: true};
+    return { ...state, user: action.payload, loggedIn: true, loggedOut: false };
+  }
+
+  if (action.type === LOGOUT_SUCCESS) {
+    return { ...state, loggedIn: false, loggedOut: true  }
   }
 
   if (action.type === LOGIN_CHECK_SUCCESS) {
@@ -78,7 +93,7 @@ function rootReducer(state = initialState, action) {
     }
   }
 
-  if (action.type === 'SOCKET_MESSAGE_RECEIVED') {
+  if (action.type === SOCKET_MESSAGE_RECEIVED) {
     const { team, channel } = action.payload;
     const teamChannelName = `${team.name}-${channel.name}`;
     const messages = state.messages[teamChannelName];
@@ -120,6 +135,14 @@ function rootReducer(state = initialState, action) {
       ...state, 
       addChannel: {}
     }
+  }
+
+  if (action.type === ADD_USERS_TEAM_SUCCESS) {
+    return { ...state, addUsersToTeamCompleted: true }
+  }
+
+  if (action.type === ADD_USERS_TEAM_RESET) {
+    return { ...state, addUsersToTeamCompleted: false }
   }
 
   return state;

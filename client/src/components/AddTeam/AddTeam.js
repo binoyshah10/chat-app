@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import styles from './AddTeam.module.css';
-import { addTeam, resetAddTeam, selectTeam } from '../../actions/index'
+import { addTeam, resetAddTeam, selectTeam, getAllTeams } from '../../actions/index'
 
 const mapDispatchToProps = (dispatch) => {
     return {
         addTeam: payload => dispatch(addTeam(payload)),
         resetAddTeam: () => dispatch(resetAddTeam()),
         selectTeam: (payload) => dispatch(selectTeam(payload)),
+        getAllTeams: (payload) => dispatch(getAllTeams(payload)),
     };
 }
 
@@ -50,6 +51,7 @@ class AddTeam extends Component {
             this.props.resetAddTeam();
             this.handleCancel();
             this.props.selectTeam(team);
+            this.props.getAllTeams(this.props.user);
             this.props.history.push(`/team/${team.id}/channel/${channel.id}`);
         }
     }

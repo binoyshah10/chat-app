@@ -23,6 +23,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization', 'Content-Length', 'X-Requested-With', 'Accept']
 }));
 
+// jwt config
 app.use(jwt({
   secret: process.env.JWT_SECRET, 
   isRevoked: blacklist.isRevoked,
@@ -34,8 +35,10 @@ app.use(jwt({
   }
 }).unless({path: ['/signup', '/login']}));
 
+// setting routes
 app.use(routes);
 
+// returning 401 unauthorized error
 app.use(function(err, req, res, next) {
   console.log(err);
   if(err.name === 'UnauthorizedError') {
@@ -47,7 +50,6 @@ app.use(function(err, req, res, next) {
 
 const server = http.createServer(app);
 const io = socketio(server);
-// app.set('socketio', io);
 
 const messaging = require('./lib/socket.js')(io);
 

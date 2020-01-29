@@ -31,6 +31,7 @@ const mapStateToProps = (state) => {
 class TeamSidebar extends Component {
 
     state = {
+        allTeams: {},
         selectedTeam: {},
         channels: {},
         isOpen: false
@@ -44,9 +45,10 @@ class TeamSidebar extends Component {
 
     componentDidUpdate() {
 
-        this.props.getAllTeams(this.props.user);
+        
 
         if (this.props.allTeams.length > 0 && Object.entries(this.props.selectedTeam).length === 0) {
+            this.setState({ allteams: this.props.allTeams })
             const firstTeam = this.props.allTeams[0];
             this.setState({ selectedTeam: firstTeam });
             this.handleSelectTeam(firstTeam);

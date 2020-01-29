@@ -3,6 +3,7 @@ import styles from './Login.module.css';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { submitLogin } from "../../actions/index";
+import { withRouter } from "react-router";
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -13,6 +14,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         loggedIn: state.loggedIn,
+        loggedOut: state.loggedOut,
         loading: state.loading,
         selectedTeam: state.selectedTeam,
         selectedChannel: state.selectedChannel
@@ -43,12 +45,16 @@ class Login extends Component {
     componentDidMount() {
         if(this.props.loggedIn) {
             this.props.history.push('/chat')
+        } else if (this.props.loggedOut && this.props.location.pathname !== '/login'){
+            this.props.history.push('/login')
         }
     }
 
     componentDidUpdate() {
         if(this.props.loggedIn) {
             this.props.history.push('/chat')
+        } else if (this.props.loggedOut && this.props.location.pathname !== '/login'){
+            this.props.history.push('/login')
         }
     }
 
@@ -56,7 +62,7 @@ class Login extends Component {
         return (
             <div className={styles.container}>
                 <div className={styles.loginContainer}>
-                    <h1 className={styles.loginHeader}>Log into App</h1>
+                    <h1 className={styles.loginHeader}>Log into Chat App</h1>
                         <Link to={`/signup`}>
                             <p className={styles.text}>{`Or Create Account`}</p>
                         </Link>
@@ -74,4 +80,4 @@ class Login extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

@@ -3,9 +3,12 @@ const jwt = require('jsonwebtoken')
 const blacklist = require('express-jwt-blacklist');
 const models = require('../models');
 const Op = models.Sequelize.Op
+const teamController = require('../controllers/teamController');
 
-// Requiring User model
+// Requiring models
+const Team = models.Team;
 const User = models.User;
+const Channel = models.Channel;
 
 exports.signUpUser = (req, res) => {
     const userData = {
@@ -13,9 +16,11 @@ exports.signUpUser = (req, res) => {
         lastName: req.body.lastName,
         email: req.body.email,
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
       }
-    console.log("aaa" + userData);
+    const teamName = req.body.teamName;
+		const joinNewTeam = req.body.joinNewTeam
+
     User.findOne({
         where: {
             [Op.or] : [
@@ -34,10 +39,81 @@ exports.signUpUser = (req, res) => {
                 userData.password = hash
                 User.create(userData)
                   .then(user => {
-                    res.json({ 
-                        success: true,
-                        message: user.email + ' signed up!' 
-                    })
+
+                    let userData = {
+                        id: user.id,
+                        firstName: user.firstName, 
+                        lastName: user.lastName, 
+                        username: user.username, 
+                        email: user.email
+                    };
+
+                    // Check status of joinNewTeam
+                    if(joinNewTeam) {
+                        // Create new team and channel
+                        teamController.addTeam(teamName, user).then(response => {
+                            if (response.success === true) {
+                                let jwtToken = jwt.sign(userData, process.env.JWT_SECRET, {
+                                    expiresIn: '6h',
+                                    subject: user.dataValues.username,
+                                  })
+                                res.cookie('jwt', jwtToken, { httpOnly: true })
+                                res.json({ 
+                                    success: true,
+                                    message: user.email + ' signed up!', 
+                                    payload: userData
+                                })
+                            } else {
+                                // new team creation failed
+                                res.json({ 
+                                    success: false,
+                                    message: response.message 
+                                })
+                            }
+                        })
+                    } else { 
+                        // join existing team
+                        Team.findOne({
+                            where: {
+                                name: teamName 
+                            }
+                        }).then(team => {
+                            // console.log(team)
+                            if(team) {
+                                // team found
+                                Channel.findAll({
+                                    where: {
+                                            teamId: team.dataValues.id,
+                                        }
+                                }).then(channels => {
+                                    team.addUser(user.id);  
+                                    channels.forEach(channel => {
+                                        channel.addUser(user.id)
+                                    })
+                                    let jwtToken = jwt.sign(userData, process.env.JWT_SECRET, {
+                                        expiresIn: '6h',
+                                        subject: user.dataValues.username,
+                                      })
+                                    res.cookie('jwt', jwtToken, { httpOnly: true })
+                                    res.json({ 
+                                        success: true,
+                                        message: user.email + ' signed up!',
+                                        payload: userData 
+                                    })
+                                }).catch(
+                                    // channel finding query error
+                                )
+                            } else {
+                                // team not found
+                                res.json({
+                                    success: false,
+                                    message: "Team doesn't exist, couldn't create user"
+                                })
+                            }
+                        }).catch(
+                            // team finding query error
+                        );
+                    }
                   })
                   .catch(err => {
                     res.json({
@@ -86,7 +162,7 @@ exports.loginUser = (req, res) => {
                         email: user.email
                     };
                     let jwtToken = jwt.sign(userData, process.env.JWT_SECRET, {
-                        expiresIn: '1h',
+                        expiresIn: '6h',
                         subject: user.dataValues.username,
                       })
                     res.cookie('jwt', jwtToken, { httpOnly: true })
@@ -120,6 +196,7 @@ exports.loginUser = (req, res) => {
 
 exports.logoutUser = (req, res) => {
     blacklist.revoke(req.user)
+    res.clearCookie('jwt');
     res.status(200).json({
         success: true,
         message: "User has successfully logged out"
@@ -139,5 +216,64 @@ exports.isAuthenticated = (req, res) => {
         success: true,
         message: "User is authenticated",
         payload: userData
+    })
+}
+
+exports.searchUser = (req, res) => {
+    const userName = req.query.userName;
+    
+    User.findAll({
+        attributes: ['firstName', 'lastName', 'email'],
+        where: {
+            [Op.or] : [
+                {
+                    firstName: { [Op.iLike]: `%${userName}%` }
+                },
+                {
+                    lastName: { [Op.iLike]: `%${userName}%` }
+                }
+            ]
+        }
+      }).then(users => {
+          users = users.map(user => {
+              return {
+                  value: `${user.dataValues.email}`, 
+                  label: `${user.dataValues.firstName} ${user.dataValues.lastName}`
+                }});
+          res.json(users);
+      })
+}
+
+exports.addUsersToTeam = (req, res) => {
+    const { usersEmails, teamInfo } = req.body;
+    User.findAll({
+        where: {
+            [Op.or] : usersEmails
+        }
+    }).then(users => {
+        Team.findOne({
+            where: {                
+                name: teamInfo.name
+            }
+        }).then(team => {
+            team.addUsers(users).then(response => {
+                res.json({ 
+                    success: true,
+                    message: `The selected users were added to Team ${team.name}`,
+                })
+            })
+            .catch(err => {
+                res.json({ 
+                    success: false,
+                    message: `The selected users couldn't be added to Team ${team.name}`,
+                })
+            })
+        })
+        .catch(err => {
+            res.json({
+                success: false,
+                message: `Could not find Team ${teamInfo.name}`
+            })
+        })
     })
 }

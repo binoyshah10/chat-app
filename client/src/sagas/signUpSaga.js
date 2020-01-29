@@ -27,7 +27,9 @@ function sendSignUpInfo(payload) {
     email: payload['email'],
     username: payload['username'],
     password: payload['password'],
-    confPassword: payload['confPassword']
+    confPassword: payload['confPassword'],
+    teamName: payload['teamName'],
+    joinNewTeam: payload['joinNewTeam']
   })
 }
 

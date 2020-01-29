@@ -11,12 +11,14 @@ const messageController = require('../controllers/messageController');
 // User Routes
 router.post('/signup', userController.signUpUser);
 router.post('/login', userController.loginUser);
-router.post('/logout', userController.logoutUser);
+router.get('/logout', userController.logoutUser);
 router.get('/isAuthenticated', userController.isAuthenticated);
+router.get('/searchUser', userController.searchUser)
+router.post('/addUsersToTeam', userController.addUsersToTeam)
 
 // Teams routes
 router.post('/getAllTeams', teamController.getAllTeams);
-router.post('/addTeam', teamController.addTeam);
+router.post('/addTeam', teamController.addTeamHandler);
 
 // Channel routes
 router.post('/getChannels', channelController.getChannelsForTeam);

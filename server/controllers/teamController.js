@@ -23,67 +23,73 @@ exports.getAllTeams = (req, res) => {
     })
 }
 
-exports.addTeam = (req, res) => {
+exports.addTeamHandler = (req, res) => {
     const { teamName, user } = req.body;
+    this.addTeam(teamName, user)
+        .then(response => res.json(response))
+        .catch(response => res.status(409).json(response))
+}
 
-    // Create new team
-    Team.findOne({
-        where: {                
-            name: teamName
-        }
-    }).then(team => {
-        if(!team) {
-                Team.create({ name: teamName })
-                    .then(team => {
-                        // Associate user and team
-                        team.setUsers(user.id);  
-                        // Create new channel
-                        Channel.create({ name: 'general' })
-                            .then(channel => {
-                                channel.setTeam(team.id);
-                                channel.setUsers(user.id);  
-                                res.json({ 
-                                    success: true,
-                                    message: `Team ${team.name} and channel ${channel.name} were created`,
-                                    payload: {
-                                        team: {id: team.id, name: team.name},
-                                        channel: {id: channel.id, name: channel.name, public: channel.public, dm: channel.dm}
-                                    }
+exports.addTeam = (teamName, user) => {
+    return new Promise((resolve, reject) => {
+        Team.findOne({
+            where: {                
+                name: teamName
+            }
+        }).then(team => {
+            if(!team) {
+                    Team.create({ name: teamName })
+                        .then(team => {
+                            // Associate user and team
+                            team.addUser(user.id);  
+                            // Create new channel
+                            Channel.create({ name: 'general' })
+                                .then(channel => {
+                                    channel.setTeam(team.id);
+                                    channel.addUser(user.id);  
+
+                                    resolve({ 
+                                        success: true,
+                                        message: `Team ${team.name} and channel ${channel.name} were created`,
+                                        payload: {
+                                            team: {id: team.id, name: team.name},
+                                            channel: {id: channel.id, name: channel.name, public: channel.public, dm: channel.dm}
+                                        }
+                                    })
                                 })
+                                .catch(err => {
+                                    console.log(err)
+                                    Team.destroy({
+                                        where: {
+                                            id: team.id
+                                        }
+                                    })
+                                    reject({
+                                        success: false,
+                                        message: `Team and channel couldn't be created ${err}`
+                                    })
+                                })
+                        })
+                        .catch(err => {
+                            console.log(err)
+                            reject({
+                                success: false,
+                                message: `Team couldn't be created ${err}`
                             })
-                            .catch(err => {
-                                console.log(err)
-                                Team.destroy({
-                                    where: {
-                                        id: team.id
-                                    }
-                                })
-                                res.json({
-                                    success: false,
-                                    message: `Team and channel couldn't be created ${err}`
-                                })
-                            })
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    res.json({
-                        success: false,
-                        message: `Team couldn't be created ${err}`
-                    })
-                  })
-        }
-        else {
-            res.json({
-                sucess: false,
-                message: 'Team already exists!'
-            });
-        }
-    }).catch(err => {
-        console.log(err)
-        res.json({
-            success: false,
-            message: err + " # Add Team query failed!"
+                      })
+            }
+            else {
+                reject({
+                    sucess: false,
+                    message: 'Team already exists!'
+                });
+            }
+        }).catch(err => {
+            console.log(err)
+            reject({
+                success: false,
+                message: err + " # Add Team query failed!"
+            })
         })
     })
-
 }

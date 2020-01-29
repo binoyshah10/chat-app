@@ -7,9 +7,9 @@
 }
 
 .signUpContainer {
-    margin: 10%; 
+    margin: 7%; 
     width: 20%;
-    height: 56%;
+    height: 71%;
     background-color:rgb(254, 254, 254);
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     font-family: 'Lato', sans-serif;
@@ -92,6 +92,30 @@ a:hover {
 }
 
 .error {
+    text-align: center;
     margin: 10px auto 10px auto;
+    font-weight: bold;
     color: red;
+}
+
+.joinTeamContainer {
+    margin-left: 10%;
+    display: block;
+    text-align: left;
+}
+
+.teamSpan {
+    margin-top: -50px;
+    margin-left: 20px;
+    width: 350px;
+}
+
+.teamInput {
+    width: 44%;
+    background-color: rgb(245, 245, 245);
+    margin-top: 20px;
+    margin-left: 2%;
+    padding: 15px;
+    border: none;
+    border-radius: 4px;
 }
