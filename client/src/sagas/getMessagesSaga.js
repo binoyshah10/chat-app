@@ -3,6 +3,8 @@ import { GET_MESSAGES, GET_MESSAGES_SUCCESS, GET_MESSAGES_FAILED } from '../cons
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
+const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000';
+
 export default function* getMessagesWatcherSaga() {
   yield takeEvery(GET_MESSAGES, getMessagesWorkerSaga);
 }
@@ -20,7 +22,7 @@ function* getMessagesWorkerSaga({ payload }) {
 }
 
 function getMessages(data) {
-    return axios.post('http://localhost:5000/getMessages', data);
+    return axios.post(`${API_BASE}/getMessages`, data);
 }
 
 

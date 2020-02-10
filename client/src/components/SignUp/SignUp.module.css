@@ -71,7 +71,7 @@ a:hover {
     border-radius: 4px;
 }
 
-[type=button] {
+.container [type=button] {
     width: 88%;
     background-color: rgb(52, 113, 235);
     color: white;

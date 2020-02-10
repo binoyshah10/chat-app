@@ -2,6 +2,7 @@ import io from "socket.io-client";
 
 const socketMiddleware = () => {
   let socket = null;
+  const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000';
 
   return store => next => action => {
     switch (action.type) {
@@ -10,7 +11,7 @@ const socketMiddleware = () => {
           socket.disconnect();
         }
         // connect to the remote host
-        socket = io('http://localhost:5000');
+        socket = io(API_BASE);
         
         socket.on('connect', () => {
             console.log('socket connected')
@@ -40,7 +41,6 @@ const socketMiddleware = () => {
         break;
 
       default:
-        // console.log('the next action:', action);
         return next(action);
     }
   };

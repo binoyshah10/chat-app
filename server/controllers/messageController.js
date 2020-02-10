@@ -67,8 +67,13 @@ exports.getMessages = (req, res) => {
     lrangeAsync(redisChannel, 0, -1).then(messages => {
         messages = messages.map(messageData => JSON.parse(messageData));
         res.json({
-            teamChannelName: redisChannel,
-            messages
+            success: true,
+            payload: {teamChannelName: redisChannel, messages}
         });
+    }).catch(err => {
+        res.json({
+            success: false,
+            message: 'Unable to get messages'
+        })
     })
 }

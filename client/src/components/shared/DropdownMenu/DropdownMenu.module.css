@@ -3,6 +3,7 @@
     margin: 10px 0 0 20px;
     font-family: 'Lato', sans-serif;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 .menu li {

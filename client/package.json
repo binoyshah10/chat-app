@@ -13,6 +13,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.3.0",
     "react-select": "^3.0.8",
+    "react-toastify": "^5.5.0",
     "react-toggle": "^4.1.1",
     "redux": "^4.0.4",
     "redux-saga": "^1.1.1",

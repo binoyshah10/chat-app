@@ -47,7 +47,6 @@ class ChannelSidebar extends Component {
 
         if (this.props.channels.length > 0 && Object.entries(this.props.selectedChannel).length === 0) {
             const firstChannel = this.props.channels[0];
-            // this.props.selectChannel(firstChannel);
             this.setState({ channel: firstChannel });
             this.handleSelectChannel(firstChannel);
         }
@@ -68,7 +67,6 @@ class ChannelSidebar extends Component {
                 channel: channel
             }
         }
-
         this.props.sendSocketMessage(payload);
         this.props.history.push(`/team/${this.props.selectedTeam.id}/channel/${channel.id}`);
     }

@@ -7,6 +7,8 @@ import AsyncSelect from 'react-select/async';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
+const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000';
+
 const mapDispatchToProps = (dispatch) => {
     return {
         addUsersToTeam: (payload) => dispatch(addUsersToTeam(payload)),
@@ -52,7 +54,7 @@ class AddUserToTeam extends Component {
 
     promiseOptions = inputValue => {
         return new Promise(resolve => {
-            axios.get('http://localhost:5000/searchUser', {
+            axios.get(`${API_BASE}/searchUser`, {
                 params: {
                     userName: inputValue
                 }

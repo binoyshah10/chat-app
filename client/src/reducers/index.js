@@ -37,11 +37,11 @@ const initialState = {
 function rootReducer(state = initialState, action) {
 
   if (action.type === SIGN_UP_SUCCESS) {
-    return { ...state, user: action.payload, loggedIn: true, loggedOut: false };
+    return { ...state, user: action.payload.payload, loggedIn: true, loggedOut: false };
   }
 
   if (action.type === LOGIN_SUCCESS) {
-    return { ...state, user: action.payload, loggedIn: true, loggedOut: false };
+    return { ...state, user: action.payload.payload, loggedIn: true, loggedOut: false };
   }
 
   if (action.type === LOGOUT_SUCCESS) {
@@ -51,7 +51,7 @@ function rootReducer(state = initialState, action) {
   if (action.type === LOGIN_CHECK_SUCCESS) {
     return {
       ...state, 
-      user: action.payload,
+      user: action.payload.payload,
       loggedIn: true,
       loading: false
      }
@@ -66,7 +66,7 @@ function rootReducer(state = initialState, action) {
   }
 
   if (action.type === GET_ALL_TEAMS_SUCCESS) {
-    return {...state, allTeams: action.payload}
+    return {...state, allTeams: action.payload.payload}
   }
 
   if (action.type === SELECT_TEAM) {
@@ -74,7 +74,7 @@ function rootReducer(state = initialState, action) {
   }
 
   if (action.type === GET_CHANNELS_SUCCESS) {
-    return {...state, channelsForTeam: action.payload}
+    return {...state, channelsForTeam: action.payload.payload}
   }
 
   if (action.type === SELECT_CHANNEL) {
@@ -82,8 +82,8 @@ function rootReducer(state = initialState, action) {
   }
 
   if (action.type === GET_MESSAGES_SUCCESS) {
-    const teamChannelName = action.payload['teamChannelName']
-    const messages = action.payload['messages'].reverse()
+    const teamChannelName = action.payload.payload['teamChannelName']
+    const messages = action.payload.payload['messages'].reverse()
     return { 
       ...state, 
       messages: {
@@ -108,7 +108,7 @@ function rootReducer(state = initialState, action) {
   }
 
   if (action.type === ADD_TEAM_SUCCESS) {
-    const { team, channel } = action.payload;
+    const { team, channel } = action.payload.payload;
     return {
       ...state, 
       addTeam: { team, channel }
@@ -123,7 +123,7 @@ function rootReducer(state = initialState, action) {
   }
 
   if (action.type === ADD_CHANNEL_SUCCESS) {
-    const { channel } = action.payload;
+    const { channel } = action.payload.payload;
     return {
       ...state,
       addChannel: { channel }

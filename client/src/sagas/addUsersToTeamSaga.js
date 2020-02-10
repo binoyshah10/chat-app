@@ -3,6 +3,8 @@ import axios from 'axios';
 import { ADD_USERS_TEAM, ADD_USERS_TEAM_SUCCESS, ADD_USERS_TEAM_FAILED } from '../constants/actionTypes'
 axios.defaults.withCredentials = true;
 
+const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000';
+
 export default function* addUsersToTeamWatcherSaga() {
   yield takeEvery(ADD_USERS_TEAM, addUsersToTeamWorkerSaga);
 }
@@ -19,7 +21,7 @@ function* addUsersToTeamWorkerSaga({ payload }) {
 }
 
 function addUsersToTeam(payload) {
-  return axios.post('http://localhost:5000/addUsersToTeam', {
+  return axios.post(`${API_BASE}/addUsersToTeam`, {
       usersEmails: payload.users,
       teamInfo: payload.team
   });

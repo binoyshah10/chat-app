@@ -2,12 +2,14 @@ const messageController = require('../controllers/messageController');
 
 module.exports = (io) => {
 
+    const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379'
+
     let subscribedChannels = []
 
     io.on('connection', socket => {
 
-        const pub = require('redis').createClient();
-        const sub = require('redis').createClient();
+        const pub = require('redis').createClient(REDIS_URL);
+        const sub = require('redis').createClient(REDIS_URL);
 
         console.log('client connected')
         console.log( socket.client.conn.server.clientsCount + " users connected" );
